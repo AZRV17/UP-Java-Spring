@@ -1,0 +1,16 @@
+<!-- src/main/resources/templates/users/details.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1>Профиль пользователя</h1>
+<p>Имя пользователя: <span th:text="${user.login}">Имя пользователя</span></p>
+<p>Email: <span th:text="${user.email}">Email</span></p>
+<p>Email: <span th:text="${user.phoneNumber}">Номер телефона</span></p>
+<p>Email: <span th:text="${user.role}">Роль</span></p>
+</body>
+</html>

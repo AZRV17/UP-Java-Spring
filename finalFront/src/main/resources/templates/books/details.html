@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о книге</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1 th:text="${book.title}">Название книги</h1>
+<p><strong>Авторы:</strong> <span th:each="author : ${book.authors}" th:text="${author.name}">Автор</span></p>
+<p><strong>Описание:</strong> <span th:text="${book.isbn}">Описание книги</span></p>
+<a th:href="@{/books/{id}/update(id=${book.id})}">Редактировать</a>
+<form th:action="@{/books/{id}(id=${book.id})}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">Удалить книгу</button>
+</form>
+<a href="/books">Назад к списку книг</a>
+</body>
+</html>

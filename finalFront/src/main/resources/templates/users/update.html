@@ -1,0 +1,19 @@
+<!-- src/main/resources/templates/users/update.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать пользователя</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1>Редактировать пользователя</h1>
+<form th:action="@{/users/{id}(id=${user.id})}" th:object="${user}" method="post">
+    <label>Имя пользователя: <input type="text" th:field="*{user.login}" /></label><br>
+    <label>Email: <input type="email" th:field="*{user.email}" /></label><br>
+    <label>Роль: <input type="text" th:field="*{user.role}" /></label><br>
+    <label>Email: <input type="text" th:field="*{user.phoneNumber}" /></label><br>
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>

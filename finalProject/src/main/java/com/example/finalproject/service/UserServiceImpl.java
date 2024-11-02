@@ -1,0 +1,88 @@
+package com.example.finalproject.service;
+
+import com.example.finalproject.dto.LoginRequest;
+import com.example.finalproject.dto.RegisterRequest;
+import com.example.finalproject.models.ModelUser;
+import com.example.finalproject.repository.RoleRepository;
+import com.example.finalproject.repository.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+@Service("userService")
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public List<ModelUser> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public ModelUser getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public ModelUser getUserByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
+
+    @Override
+    public ModelUser createUser(ModelUser modelUser) {
+        return userRepository.save(modelUser);
+    }
+
+    @Override
+    public ModelUser updateUser(Long id, ModelUser modelUser) {
+        return userRepository.save(modelUser);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public void registerUser(RegisterRequest registerRequest) {
+        ModelUser modelUser = new ModelUser();
+        modelUser.setLogin(registerRequest.getLogin());
+        modelUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        modelUser.setRole(roleRepository.findByName("USER"));
+        modelUser.setEmail(registerRequest.getEmail());
+        modelUser.setPhoneNumber(registerRequest.getPhoneNumber());
+        userRepository.save(modelUser);
+    }
+
+    public String authenticateUser(LoginRequest loginRequest) {
+        Optional<ModelUser> userOptional = Optional.ofNullable(userRepository.findByLogin(loginRequest.getLogin()));
+
+        if (userOptional.isPresent() && passwordEncoder.matches(loginRequest.getPassword(), userOptional.get().getPassword())) {
+            ModelUser modelUser = userOptional.get();
+
+            return Jwts.builder()
+                    .setSubject(modelUser.getLogin())
+                    .claim("role", modelUser.getRole().getName())
+                    .setIssuedAt(new Date())
+                    .setExpiration(Date.from(Instant.now().plusSeconds(1800))) // 30 минут
+                    .signWith(SignatureAlgorithm.HS256, "ourverylongandverysecuresecretkeyhereminimum256bitslongforhs25612345124")
+                    .compact();
+        }
+
+        throw new RuntimeException("Неправильные учетные данные");
+    }
+}

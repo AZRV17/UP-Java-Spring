@@ -1,0 +1,15 @@
+<!-- src/main/resources/templates/authors/details.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация об авторе</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1 th:text="${author.name}">Имя автора</h1>
+<p><strong>ID:</strong> <span th:text="${author.id}">1</span></p>
+<a th:href="@{/authors/{id}/update(id=${author.id})}">Редактировать автора</a>
+<a href="/authors">Назад к списку авторов</a>
+</body>
+</html>

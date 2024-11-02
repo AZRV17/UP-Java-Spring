@@ -1,0 +1,19 @@
+<!-- src/main/resources/templates/users/register.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1>Регистрация</h1>
+<form action="#" th:action="@{/users/register}" method="post">
+    <label>Имя пользователя: <input type="text" /></label><br>
+    <label>Email: <input type="email" /></label><br>
+    <label>Пароль: <input type="password"/></label><br>
+    <label>Номер телефона: <input type="text"/></label><br>
+    <button type="submit">Зарегистрироваться</button>
+</form>
+</body>
+</html>

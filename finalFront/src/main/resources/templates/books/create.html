@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить книгу</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1>Добавить книгу</h1>
+<form th:action="@{/books}" th:object="${book}" method="post">
+    <label>Название:
+        <input type="text" th:field="*{title}" required>
+    </label><br>
+
+    <label>Издатель:
+        <select th:field="*{publisherId}" required>
+            <option th:each="publisher : ${publishers}"
+                    th:value="${publisher.id}"
+                    th:text="${publisher.name}">
+            </option>
+        </select>
+    </label><br>
+
+    <label>ISBN:
+        <input type="text" th:field="*{isbn}" required>
+    </label><br>
+
+    <label>Авторы:
+        <select multiple th:field="*{authorIds}" required>
+            <option th:each="author : ${authors}"
+                    th:value="${author.id}"
+                    th:text="${author.name}">
+            </option>
+        </select>
+    </label><br>
+
+    <label>Жанр:
+        <select th:field="*{genreId}" required>
+            <option th:each="genre : ${genres}"
+                    th:value="${genre.id}"
+                    th:text="${genre.name}">
+            </option>
+        </select>
+    </label><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+<a href="/books">Назад к списку книг</a>
+</body>
+</html>

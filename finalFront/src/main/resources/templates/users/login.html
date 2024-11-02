@@ -1,0 +1,17 @@
+<!-- src/main/resources/templates/users/login.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1>Вход</h1>
+<form action="#" th:action="@{/users/login}" th:object="${loginRequest}" method="post">
+    <label>Имя пользователя: <input type="text" th:field="*{login}" /></label><br>
+    <label>Пароль: <input type="password" th:field="*{password}" /></label><br>
+    <button type="submit">Войти</button>
+</form>
+</body>
+</html>

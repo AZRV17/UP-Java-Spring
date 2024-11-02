@@ -1,0 +1,13 @@
+package com.example.finalfront.dto;
+
+import java.util.List;
+
+public class BookDTO {
+    private String title;
+    private String isbn;
+    private Long publisherId;
+    private List<Long> authorIds;
+    private Long genreId;
+
+    // Getters and setters
+}

@@ -1,0 +1,19 @@
+<!-- src/main/resources/templates/users.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+</head>
+<body>
+<th:block th:replace="partials/header :: header"></th:block>
+<h1>Список пользователей</h1>
+<ul>
+    <th:block th:each="user : ${users}">
+        <li>
+            <a th:href="@{/users/{id}(id=${user.id})}" th:text="${user.login}">Имя пользователя</a>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>
